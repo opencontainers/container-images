@@ -1,0 +1,30 @@
+name: pandoc-pr
+
+on:
+  pull_request:
+    branches: main
+    paths:
+      - 'pandoc/*'
+      - '.github/workflows/pandoc.yml'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: prepare
+        id: prepare
+        run: |
+          REPO="ghcr.io/${{ github.repository_owner }}/pandoc"
+          COMMIT="$(git rev-parse --short HEAD)"
+          echo ::set-output name=repo::${REPO}
+          echo ::set-output name=commit::${COMMIT}
+      - name: docker build
+        run: |
+          docker build -t ${{ steps.prepare.outputs.repo }}:${{ steps.prepare.outputs.commit }} pandoc/
+      - name: check image
+        run: |
+          REF="${{ steps.prepare.outputs.repo }}:${{ steps.prepare.outputs.commit }}"
+          docker run --rm --entrypoint /usr/bin/rpm ${REF} -q --queryformat "%{version}-%{release}.%{arch}" pandoc
+
