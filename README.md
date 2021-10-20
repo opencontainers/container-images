@@ -18,7 +18,7 @@ links to their respective registry homepage(s):
 Each image has a corresponding GitHub Action workflow which can be
 found in this repo at `.github/workflows/<name>.yml`.
 
-The Dockerfile and other related files for a given image can be found at the
+All related files for a given image can be found at the
 root of this repo under directory by the image's name (e.g. `pandoc/`).
 
 CI will trigger for an image if any files related to the image are modified
