@@ -34,7 +34,7 @@ jobs:
             "ghcr.io/${{ github.repository_owner }}/golangci-lint:${ORIG_IMAGE_TAG}"
         env:
           ORIG_IMAGE_REPO: docker.io/golangci/golangci-lint
-          ORIG_IMAGE_TAG: v1.42.1
+          ORIG_IMAGE_TAG: v1.52.1
       - name: clear
         if: always()
         run: |
